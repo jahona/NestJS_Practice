@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { GetUsersDto } from './dto/get-user-dto';
 
 @Controller('users')
 export class UsersController {
@@ -9,11 +10,17 @@ export class UsersController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    const { name, email } = createUserDto;
+    console.log(`유저를 생성했습니다. 이름: ${name}, 이메일: ${email}`);
+
     return this.usersService.create(createUserDto);
   }
 
   @Get()
-  findAll() {
+  findAll(@Query() getUsersDto: GetUsersDto) {
+    const { offset, limit } = getUsersDto;
+    console.log(`유저를 생성했습니다. 페이지번호: ${offset}, 페이지개수: ${limit}`);
+
     return this.usersService.findAll();
   }
 
